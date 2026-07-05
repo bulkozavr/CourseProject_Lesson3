@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locale Reference</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Locale Reference</h1>
+  </header>
+  <main>
+    <div id="loading">Loading locales…</div>
+    <div id="error" class="hidden" role="alert"></div>
+    <div id="empty" class="hidden">No locales found.</div>
+    <div id="table-wrapper" class="hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Language</th>
+            <th>Country</th>
+            <th>Currency</th>
+            <th>TLD</th>
+            <th>Flag</th>
+          </tr>
+        </thead>
+        <tbody id="locales-tbody"></tbody>
+      </table>
+    </div>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
