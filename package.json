@@ -1,0 +1,12 @@
+{
+  "name": "locale-reference",
+  "version": "0.1.0",
+  "description": "Locale reference — list of locales with codes, flags, currencies, and TLDs",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "code": "en-AU",
+    "language": "English",
+    "country": "Australia",
+    "currency": "AUD",
+    "currencyName": "Australian dollar",
+    "tld": ".au",
+    "flag": "🇦🇺"
+  },
+  {
+    "code": "pt-BR",
+    "language": "Portuguese",
+    "country": "Brazil",
+    "currency": "BRL",
+    "currencyName": "Brazilian real",
+    "tld": ".br",
+    "flag": "🇧🇷"
+  },
+  {
+    "code": "ja-JP",
+    "language": "Japanese",
+    "country": "Japan",
+    "currency": "JPY",
+    "currencyName": "Japanese yen",
+    "tld": ".jp",
+    "flag": "🇯🇵"
+  },
+  {
+    "code": "de-DE",
+    "language": "German",
+    "country": "Germany",
+    "currency": "EUR",
+    "currencyName": "Euro",
+    "tld": ".de",
+    "flag": "🇩🇪"
+  },
+  {
+    "code": "es-ES",
+    "language": "Spanish",
+    "country": "Spain",
+    "currency": "EUR",
+    "currencyName": "Euro",
+    "tld": ".es",
+    "flag": "🇪🇸"
+  }
+]
