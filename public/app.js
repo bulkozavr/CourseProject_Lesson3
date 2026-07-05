@@ -3,11 +3,14 @@
 
   var API_URL = '/api/locales';
 
-  var loadingEl = document.getElementById('loading');
-  var errorEl   = document.getElementById('error');
-  var emptyEl   = document.getElementById('empty');
-  var tableEl   = document.getElementById('locales-table');
-  var tbodyEl   = document.getElementById('locales-tbody');
+  var loadingEl  = document.getElementById('loading');
+  var errorEl    = document.getElementById('error');
+  var emptyEl    = document.getElementById('empty');
+  var tableEl    = document.getElementById('locales-table');
+  var tbodyEl    = document.getElementById('locales-tbody');
+  var searchEl   = document.getElementById('search-input');
+
+  var allLocales = [];
 
   function hide(el) { el.classList.add('hidden'); }
   function show(el) { el.classList.remove('hidden'); }
@@ -39,6 +42,35 @@
     }
   }
 
+  function filterAndRender() {
+    var q = searchEl.value.trim().toLowerCase();
+
+    if (!q) {
+      renderRows(allLocales);
+      if (allLocales.length === 0) { show(emptyEl); } else { show(tableEl); }
+      return;
+    }
+
+    var filtered = [];
+    for (var i = 0; i < allLocales.length; i++) {
+      var l = allLocales[i];
+      if (l.code.toLowerCase().indexOf(q) !== -1 ||
+          l.language.toLowerCase().indexOf(q) !== -1 ||
+          l.country.toLowerCase().indexOf(q) !== -1) {
+        filtered.push(l);
+      }
+    }
+
+    if (filtered.length === 0) {
+      hide(tableEl);
+      show(emptyEl);
+    } else {
+      hide(emptyEl);
+      renderRows(filtered);
+      show(tableEl);
+    }
+  }
+
   function loadLocales() {
     show(loadingEl);
     hide(errorEl);
@@ -58,6 +90,7 @@
           return;
         }
 
+        allLocales = locales;
         renderRows(locales);
         show(tableEl);
       })
@@ -67,6 +100,8 @@
         show(errorEl);
       });
   }
+
+  searchEl.addEventListener('input', filterAndRender);
 
   loadLocales();
 })();
