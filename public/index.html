@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Locale Reference</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <header>
-    <h1>Locale Reference</h1>
+    <input class="search" id="search-input" placeholder="Поиск по коду, стране или языку">
   </header>
   <main>
-    <div id="loading">Loading locales…</div>
+    <div id="loading">Загрузка…</div>
     <div id="error" class="hidden" role="alert"></div>
-    <div id="empty" class="hidden">No locales found.</div>
-    <div id="table-wrapper" class="hidden">
-      <table>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Language</th>
-            <th>Country</th>
-            <th>Currency</th>
-            <th>TLD</th>
-            <th>Flag</th>
-          </tr>
-        </thead>
-        <tbody id="locales-tbody"></tbody>
-      </table>
-    </div>
+    <div id="empty" class="hidden">Нет данных.</div>
+    <table class="locales" id="locales-table" class="hidden">
+      <thead>
+        <tr>
+          <th>Flag</th><th>Code</th><th>Language</th><th>Country</th><th>Currency</th><th>TLD</th>
+        </tr>
+      </thead>
+      <tbody id="locales-tbody"></tbody>
+    </table>
   </main>
   <script src="/app.js"></script>
 </body>

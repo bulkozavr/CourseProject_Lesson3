@@ -1,75 +1,71 @@
 (function () {
   'use strict';
 
-  const API_URL = '/api/locales';
+  var API_URL = '/api/locales';
 
-  const $ = function (id) { return document.getElementById(id); };
+  var loadingEl = document.getElementById('loading');
+  var errorEl   = document.getElementById('error');
+  var emptyEl   = document.getElementById('empty');
+  var tableEl   = document.getElementById('locales-table');
+  var tbodyEl   = document.getElementById('locales-tbody');
 
-  const loadingEl  = $('loading');
-  const errorEl    = $('error');
-  const emptyEl    = $('empty');
-  const wrapperEl  = $('table-wrapper');
-  const tbodyEl    = $('locales-tbody');
+  function hide(el) { el.classList.add('hidden'); }
+  function show(el) { el.classList.remove('hidden'); }
 
-  function show(element) {
-    element.classList.remove('hidden');
+  function esc(str) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
   }
 
-  function hide(element) {
-    element.classList.add('hidden');
+  function flagClass(code) {
+    var parts = code.split('-');
+    return 'fi fi-' + (parts.length > 1 ? parts[1] : parts[0]).toLowerCase() + ' flag';
   }
 
-  function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
-  }
-
-  function renderTable(locales) {
+  function renderRows(locales) {
     tbodyEl.innerHTML = '';
-
-    for (const loc of locales) {
-      const tr = document.createElement('tr');
+    for (var i = 0; i < locales.length; i++) {
+      var l = locales[i];
+      var tr = document.createElement('tr');
       tr.innerHTML =
-        '<td>' + escapeHTML(loc.code) + '</td>' +
-        '<td>' + escapeHTML(loc.language) + '</td>' +
-        '<td>' + escapeHTML(loc.country) + '</td>' +
-        '<td>' + escapeHTML(loc.currency) + '</td>' +
-        '<td>' + escapeHTML(loc.tld) + '</td>' +
-        '<td>' + loc.flag + '</td>';
+        '<td><span class="' + flagClass(l.code) + '"></span></td>' +
+        '<td class="code">'  + esc(l.code)     + '</td>' +
+        '<td>'               + esc(l.language) + '</td>' +
+        '<td>'               + esc(l.country)  + '</td>' +
+        '<td>'               + esc(l.currency) + '</td>' +
+        '<td>'               + esc(l.tld)      + '</td>';
       tbodyEl.appendChild(tr);
     }
   }
 
-  async function loadLocales() {
+  function loadLocales() {
     show(loadingEl);
     hide(errorEl);
     hide(emptyEl);
-    hide(wrapperEl);
+    hide(tableEl);
 
-    try {
-      const res = await fetch(API_URL);
+    fetch(API_URL)
+      .then(function (res) {
+        if (!res.ok) throw new Error('Server returned ' + res.status);
+        return res.json();
+      })
+      .then(function (locales) {
+        hide(loadingEl);
 
-      if (!res.ok) {
-        throw new Error('Server returned ' + res.status);
-      }
+        if (!Array.isArray(locales) || locales.length === 0) {
+          show(emptyEl);
+          return;
+        }
 
-      const locales = await res.json();
-
-      hide(loadingEl);
-
-      if (!Array.isArray(locales) || locales.length === 0) {
-        show(emptyEl);
-        return;
-      }
-
-      renderTable(locales);
-      show(wrapperEl);
-    } catch (err) {
-      hide(loadingEl);
-      errorEl.textContent = 'Failed to load locales. ' + err.message;
-      show(errorEl);
-    }
+        renderRows(locales);
+        show(tableEl);
+      })
+      .catch(function (err) {
+        hide(loadingEl);
+        errorEl.textContent = 'Ошибка загрузки: ' + err.message;
+        show(errorEl);
+      });
   }
 
   loadLocales();
