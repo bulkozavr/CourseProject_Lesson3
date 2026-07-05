@@ -49,8 +49,9 @@ function handleAPI(req, res, segments) {
 }
 
 function handleStatic(req, res) {
-  // Serve public/index.html for /
-  let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+  // Strip query string for file resolution, keep full path for / check
+  const urlPath = req.url.split('?')[0];
+  let filePath = path.join(__dirname, 'public', urlPath === '/' ? 'index.html' : urlPath);
 
   const ext = path.extname(filePath);
   const mimeTypes = {
@@ -69,7 +70,12 @@ function handleStatic(req, res) {
       sendJSON(res, 404, { error: 'Not found' });
       return;
     }
-    res.writeHead(200, { 'Content-Type': contentType });
+    const headers = { 'Content-Type': contentType };
+    // Prevent caching in dev — HTML may have fresh ?v= links
+    if (ext === '.html') {
+      headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    }
+    res.writeHead(200, headers);
     res.end(data);
   });
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Locale Reference</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=1">
 </head>
 <body>
   <header>
@@ -15,7 +15,7 @@
     <div id="loading">Загрузка…</div>
     <div id="error" class="hidden" role="alert"></div>
     <div id="empty" class="hidden">Нет данных.</div>
-    <table class="locales" id="locales-table" class="hidden">
+    <table class="locales hidden" id="locales-table">
       <thead>
         <tr>
           <th>Flag</th><th>Code</th><th>Language</th><th>Country</th><th>Currency</th><th>TLD</th>
@@ -24,6 +24,6 @@
       <tbody id="locales-tbody"></tbody>
     </table>
   </main>
-  <script src="/app.js"></script>
+  <script src="/app.js?v=1"></script>
 </body>
 </html>
